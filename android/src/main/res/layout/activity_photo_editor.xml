@@ -113,7 +113,7 @@
                     android:padding="15dp"
                     android:text="@string/ic_close"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/add_text_tv"
@@ -124,7 +124,7 @@
                     android:padding="15dp"
                     android:text="@string/ic_text"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/add_pencil_tv"
@@ -134,7 +134,7 @@
                     android:padding="15dp"
                     android:text="@string/ic_draw"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/add_crop_tv"
@@ -144,7 +144,7 @@
                     android:padding="15dp"
                     android:text="@string/ic_crop"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/add_image_emoji_tv"
@@ -154,7 +154,7 @@
                     android:padding="15dp"
                     android:text="@string/ic_images"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
 
             </RelativeLayout>
@@ -175,43 +175,18 @@
                 android:paddingLeft="26dp"
                 android:paddingRight="26dp">
 
-                <TextView
-                    android:id="@+id/save_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/save_text_tv"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/ic_save"
-                    android:textColor="#FFFFFF"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/save_text_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/save_tv"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/save"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
-
+                <!-- clear -->
                 <TextView
                     android:id="@+id/clear_all_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/clear_all_text_tv"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_toEndOf="@+id/save_tv"
+                    android:layout_alignParentStart="true"
                     android:gravity="center"
                     android:text="@string/ic_clear_all"
                     android:textColor="#FFFFFF"
-                    android:textSize="25sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/clear_all_text_tv"
@@ -219,13 +194,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/clear_all_tv"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_toEndOf="@+id/save_tv"
+                    android:layout_alignParentStart="true"
                     android:text="@string/clear_all"
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
+                <!-- undo -->
                 <TextView
                     android:id="@+id/undo_tv"
                     android:layout_width="wrap_content"
@@ -236,9 +211,9 @@
                     android:layout_marginTop="4dp"
                     android:layout_toEndOf="@+id/clear_all_tv"
                     android:gravity="center"
-                    android:text="@string/ic_clear_all"
+                    android:text="@string/ic_undo"
                     android:textColor="#FFFFFF"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -255,6 +230,36 @@
                     android:textSize="15sp"
                     android:visibility="gone" />
 
+                <!-- save -->
+                <TextView
+                    android:id="@+id/save_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/save_text_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toEndOf="@+id/undo_tv"
+                    android:gravity="center"
+                    android:text="@string/ic_save"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/save_text_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_below="@+id/save_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/undo_tv"
+                    android:text="@string/save"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+                
+                <!-- next -->
                 <TextView
                     android:id="@+id/go_to_next_screen_tv"
                     android:layout_width="wrap_content"
@@ -273,6 +278,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:padding="20dp"
+                android:layout_marginBottom="75dp"
                 android:visibility="gone">
 
                 <TextView

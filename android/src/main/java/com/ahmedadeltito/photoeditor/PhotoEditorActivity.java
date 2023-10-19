@@ -66,6 +66,8 @@ import java.util.UUID;
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
+import com.yalantis.ucrop.model.AspectRatio;
+import com.yalantis.ucrop.view.CropImageView;
 
 import ui.photoeditor.R;
 
@@ -130,8 +132,9 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
         }
 
 
-        Typeface newFont = getFontFromRes(R.raw.eventtusicons);
-        Typeface fontAwesome = getFontFromRes(R.raw.font_awesome_solid);
+        // Typeface newFont = getFontFromRes(R.raw.eventtusicons);
+        // Typeface fontAwesome = getFontFromRes(R.raw.font_awesome_solid);
+        Typeface materialIcon = getFontFromRes(R.raw.material_icons_outlined);
 
         emojiFont = getFontFromRes(R.raw.emojioneandroid);
 
@@ -166,16 +169,27 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
 
         photoEditImageView.setImageBitmap(rotatedBitmap);
 
-        closeTextView.setTypeface(newFont);
-        addTextView.setTypeface(newFont);
-        addPencil.setTypeface(newFont);
-        addImageEmojiTextView.setTypeface(newFont);
-        addCropTextView.setTypeface(fontAwesome);
-        saveTextView.setTypeface(newFont);
-        undoTextView.setTypeface(newFont);
-        clearAllTextView.setTypeface(newFont);
-        goToNextTextView.setTypeface(newFont);
-        deleteTextView.setTypeface(newFont);
+        // closeTextView.setTypeface(newFont);
+        // addTextView.setTypeface(newFont);
+        // addPencil.setTypeface(newFont);
+        // addImageEmojiTextView.setTypeface(newFont);
+        // addCropTextView.setTypeface(fontAwesome);
+        // saveTextView.setTypeface(newFont);
+        // undoTextView.setTypeface(newFont);
+        // clearAllTextView.setTypeface(newFont);
+        // goToNextTextView.setTypeface(newFont);
+        // deleteTextView.setTypeface(newFont);
+
+        closeTextView.setTypeface(materialIcon);
+        addTextView.setTypeface(materialIcon);
+        addPencil.setTypeface(materialIcon);
+        addImageEmojiTextView.setTypeface(materialIcon);
+        addCropTextView.setTypeface(materialIcon);
+        saveTextView.setTypeface(materialIcon);
+        undoTextView.setTypeface(materialIcon);
+        clearAllTextView.setTypeface(materialIcon);
+        goToNextTextView.setTypeface(materialIcon);
+        deleteTextView.setTypeface(materialIcon);
 
         final List<Fragment> fragmentsList = new ArrayList<>();
 
@@ -281,13 +295,13 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("clear")) {
                 clearAllTextView.setVisibility(View.INVISIBLE);
-                clearAllTextTextView.setVisibility(View.INVISIBLE);
+                clearAllTextTextView.setVisibility(View.GONE);
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("draw")) {
                 addPencil.setVisibility(View.INVISIBLE);
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("save")) {
-                saveTextTextView.setVisibility(View.INVISIBLE);
+                saveTextTextView.setVisibility(View.GONE);
                 saveTextView.setVisibility(View.INVISIBLE);
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("sticker")) {
@@ -610,7 +624,7 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
     public void onAddViewListener(ViewType viewType, int numberOfAddedViews) {
         if (numberOfAddedViews > 0) {
             undoTextView.setVisibility(View.VISIBLE);
-            undoTextTextView.setVisibility(View.VISIBLE);
+            // undoTextTextView.setVisibility(View.VISIBLE);
         }
         switch (viewType) {
             case BRUSH_DRAWING:
@@ -737,6 +751,9 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
 
     private void startCropping() {
         System.out.println(selectedImagePath);
+        if (selectedImagePath.contains("file://")||selectedImagePath.contains("content://")) {        
+            selectedImagePath = getPath(Uri.parse(selectedImagePath));
+        }
         Uri uri = Uri.fromFile(new File(selectedImagePath));
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
@@ -750,7 +767,16 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
                 UCropActivity.ALL, // When 'rotate'-tab active
                 UCropActivity.ALL  // When 'aspect ratio'-tab active
         );
-
+        // custom ratio
+        options.setAspectRatioOptions(0,
+            new AspectRatio(null, 1, 1),
+            new AspectRatio(null, 3, 2),
+            new AspectRatio(getString(R.string.ucrop_label_original).toUpperCase(),
+                    CropImageView.SOURCE_IMAGE_ASPECT_RATIO, CropImageView.SOURCE_IMAGE_ASPECT_RATIO),
+            new AspectRatio(null, 4, 3),
+            new AspectRatio(null, 16, 9));
+        // options.withAspectRatio(CropImageView.DEFAULT_ASPECT_RATIO, CropImageView.DEFAULT_ASPECT_RATIO);
+        options.useSourceImageAspectRatio();
 
         UCrop uCrop = UCrop
                 .of(uri, Uri.fromFile(new File(this.getTmpDir(this), UUID.randomUUID().toString() + ".jpg")))
