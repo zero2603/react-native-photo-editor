@@ -33,7 +33,7 @@
     <string-array name="photo_editor_emoji">
 
         <!-- People -->
-        <item> U+25EF</item>
+        <!-- <item> U+25EF</item>
         <item> U+25CB</item>
         <item> U+25AF</item>
         <item> U+25AD</item>
@@ -75,7 +75,7 @@
         <item>u+1f631</item>
         <item>u+1f620</item>
         <item>u+1f621</item>
-        <item>u+1f624</item>
+        <item>u+1f624</item> -->
 
         <!--People -->
         <!--<item>u+1f616</item>-->

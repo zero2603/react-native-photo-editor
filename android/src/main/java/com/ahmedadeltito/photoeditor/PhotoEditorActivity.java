@@ -204,8 +204,8 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
 
         fragmentsList.add(imageFragment);
 
-        EmojiFragment emojiFragment = new EmojiFragment();
-        fragmentsList.add(emojiFragment);
+        // EmojiFragment emojiFragment = new EmojiFragment();
+        // fragmentsList.add(emojiFragment);
 
         PreviewSlidePagerAdapter adapter = new PreviewSlidePagerAdapter(getSupportFragmentManager(), fragmentsList);
         pager.setAdapter(adapter);
@@ -231,8 +231,8 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
             public void onPageSelected(int position) {
                 if (position == 0)
                     mLayout.setScrollableView(((ImageFragment) fragmentsList.get(position)).imageRecyclerView);
-                else if (position == 1)
-                    mLayout.setScrollableView(((EmojiFragment) fragmentsList.get(position)).emojiRecyclerView);
+                // else if (position == 1)
+                //     mLayout.setScrollableView(((EmojiFragment) fragmentsList.get(position)).emojiRecyclerView);
             }
 
             @Override
@@ -705,7 +705,7 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
     }
 
