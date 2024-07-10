@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
@@ -135,6 +136,8 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
         // Typeface newFont = getFontFromRes(R.raw.eventtusicons);
         // Typeface fontAwesome = getFontFromRes(R.raw.font_awesome_solid);
         Typeface materialIcon = getFontFromRes(R.raw.material_icons_outlined);
+        //icomoon
+        Typeface icomoon = getFontFromRes(R.raw.icomoon);
 
         emojiFont = getFontFromRes(R.raw.emojioneandroid);
 
@@ -149,13 +152,12 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
         TextView addImageEmojiTextView = (TextView) findViewById(R.id.add_image_emoji_tv);
         TextView addCropTextView = (TextView) findViewById(R.id.add_crop_tv);
         TextView saveTextView = (TextView) findViewById(R.id.save_tv);
-        TextView saveTextTextView = (TextView) findViewById(R.id.save_text_tv);
+        TextView addRotateTextView = (TextView) findViewById(R.id.add_rotate_tv);
         undoTextView = (TextView) findViewById(R.id.undo_tv);
         undoTextTextView = (TextView) findViewById(R.id.undo_text_tv);
         doneDrawingTextView = (TextView) findViewById(R.id.done_drawing_tv);
         eraseDrawingTextView = (TextView) findViewById(R.id.erase_drawing_tv);
         TextView clearAllTextView = (TextView) findViewById(R.id.clear_all_tv);
-        TextView clearAllTextTextView = (TextView) findViewById(R.id.clear_all_text_tv);
         TextView goToNextTextView = (TextView) findViewById(R.id.go_to_next_screen_tv);
         photoEditImageView = (ImageView) findViewById(R.id.photo_edit_iv);
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
@@ -180,16 +182,17 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
         // goToNextTextView.setTypeface(newFont);
         // deleteTextView.setTypeface(newFont);
 
-        closeTextView.setTypeface(materialIcon);
-        addTextView.setTypeface(materialIcon);
-        addPencil.setTypeface(materialIcon);
-        addImageEmojiTextView.setTypeface(materialIcon);
-        addCropTextView.setTypeface(materialIcon);
-        saveTextView.setTypeface(materialIcon);
-        undoTextView.setTypeface(materialIcon);
-        clearAllTextView.setTypeface(materialIcon);
-        goToNextTextView.setTypeface(materialIcon);
-        deleteTextView.setTypeface(materialIcon);
+        closeTextView.setTypeface(icomoon);
+        addTextView.setTypeface(icomoon);
+        addPencil.setTypeface(icomoon);
+        addImageEmojiTextView.setTypeface(icomoon);
+        addCropTextView.setTypeface(icomoon);
+        saveTextView.setTypeface(icomoon);
+        undoTextView.setTypeface(icomoon);
+        clearAllTextView.setTypeface(icomoon);
+        goToNextTextView.setTypeface(icomoon);
+        deleteTextView.setTypeface(icomoon);
+        addRotateTextView.setTypeface(icomoon);
 
         final List<Fragment> fragmentsList = new ArrayList<>();
 
@@ -247,14 +250,13 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
         addTextView.setOnClickListener(this);
         addPencil.setOnClickListener(this);
         saveTextView.setOnClickListener(this);
-        saveTextTextView.setOnClickListener(this);
         undoTextView.setOnClickListener(this);
         undoTextTextView.setOnClickListener(this);
         doneDrawingTextView.setOnClickListener(this);
         eraseDrawingTextView.setOnClickListener(this);
         clearAllTextView.setOnClickListener(this);
-        clearAllTextTextView.setOnClickListener(this);
         goToNextTextView.setOnClickListener(this);
+        addRotateTextView.setOnClickListener(this);
 
         ArrayList<Integer> intentColors = (ArrayList<Integer>) getIntent().getExtras().getSerializable("colorPickerColors");
 
@@ -295,13 +297,11 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("clear")) {
                 clearAllTextView.setVisibility(View.INVISIBLE);
-                clearAllTextTextView.setVisibility(View.GONE);
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("draw")) {
                 addPencil.setVisibility(View.INVISIBLE);
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("save")) {
-                saveTextTextView.setVisibility(View.GONE);
                 saveTextView.setVisibility(View.INVISIBLE);
             }
             if (hiddenControls.get(i).toString().equalsIgnoreCase("sticker")) {
@@ -596,15 +596,18 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
         } else if(v.getId() == R.id.add_crop_tv) {
             System.out.println("CROP IMAGE DUD");
             startCropping();
+        } else if (v.getId() == R.id.add_rotate_tv) {
+            System.out.println("Rotate IMAGE DUD");
+            startRotate();
         } else if (v.getId() == R.id.add_text_tv) {
             openAddTextPopupWindow("", -1);
         } else if (v.getId() == R.id.add_pencil_tv) {
             updateBrushDrawingView(true);
         } else if (v.getId() == R.id.done_drawing_tv) {
             updateBrushDrawingView(false);
-        } else if (v.getId() == R.id.save_tv || v.getId() == R.id.save_text_tv) {
+        } else if (v.getId() == R.id.save_tv) {
             returnBackWithSavedImage();
-        } else if (v.getId() == R.id.clear_all_tv || v.getId() == R.id.clear_all_text_tv) {
+        } else if (v.getId() == R.id.clear_all_tv) {
             clearAllViews();
         } else if (v.getId() == R.id.undo_text_tv || v.getId() == R.id.undo_tv) {
             undoViews();
@@ -783,6 +786,27 @@ public class PhotoEditorActivity extends AppCompatActivity implements View.OnCli
                 .withOptions(options);
 
         uCrop.start(this);
+    }
+
+    private void startRotate() {
+        // Get the current bitmap from the ImageView
+        BitmapDrawable drawable = (BitmapDrawable) photoEditImageView.getDrawable();
+        Bitmap currentBitmap = drawable.getBitmap();
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(-90);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(
+            currentBitmap,
+            0,
+            0,
+            currentBitmap.getWidth(),
+            currentBitmap.getHeight(),
+            matrix,
+            true
+        );
+
+        // Set the rotated bitmap on the ImageView
+        photoEditImageView.setImageBitmap(rotatedBitmap);
     }
 
 
